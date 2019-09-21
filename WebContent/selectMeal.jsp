@@ -38,6 +38,7 @@ function submit (){
 				<div class="form-group">
 					<label>
 						<input type="date" id="now_date" name="schoolDate" onchange="submit()" class="form-control" style="margin-top: 25px; background: none; color: white; border: solid white 2px;">
+						<input type="submit" class="btn btn-outline-success">
 					</label>
 				</div>
 			</form>
