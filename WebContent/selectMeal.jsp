@@ -116,7 +116,11 @@ function submit (){
 		
 	<% }//for %>
 	
-	<% if(cnt == 0) out.print("선택하신 날의 급식정보가 없습니다"); %>
+	<% if(cnt == 0) { %>
+		<div class="col-md-12" style="text-align: center;">
+			선택하신 날의 급식정보가 없습니다
+		</div>
+	<% } %>
 	</div>
 </div>
 

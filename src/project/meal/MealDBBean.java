@@ -89,4 +89,36 @@ public class MealDBBean {
 		return list;
 	}
 	
+	public List<MealTimeBean> selectMealAll() throws Exception {
+		Connection conn=null;
+		String driver="oracle.jdbc.driver.OracleDriver";
+		String url="jdbc:oracle:thin:@localhost:1521:xe";
+		PreparedStatement pstat=null;
+		List<MealTimeBean> list = new ArrayList<MealTimeBean>();
+		
+	    try{
+	    	Class.forName(driver);
+			conn = DriverManager.getConnection(url,"TRAVEL","meal");
+			
+	        String sql = "SELECT * FROM MEAL";
+	        pstat = conn.prepareStatement(sql);
+	        ResultSet rs = pstat.executeQuery();
+
+	        while(rs.next()){
+	        	MealTimeBean mealData = new MealTimeBean();
+	        	mealData.setSchoolDate(rs.getString("schooldate"));
+	    		mealData.setSchoolTime(rs.getString("schooltime"));
+	    		System.out.println(mealData);
+	        	list.add(mealData);
+	        }
+	        
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(pstat != null) { try { pstat.close(); } catch(Exception e) { } }
+			if(conn != null) { try { conn.close(); } catch(Exception e) { } }
+		}
+		return list;
+	}
+	
 }

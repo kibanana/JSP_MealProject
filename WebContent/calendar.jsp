@@ -1,9 +1,9 @@
+<%@page import="project.meal.MealDBBean"%>
+<%@page import="project.meal.MealTimeBean"%>
+<%@page import="java.util.List"%>
+<%@page import="java.sql.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Calendar"%>
-<%@page import="java.util.List"%>
-<%@page import="project.meal.MealDBBean"%>
-<%@page import="java.sql.Date"%>
-<%@page import="project.meal.MealDataBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -106,17 +106,13 @@ System.out.println(intToday);
 
 <%
 	request.setCharacterEncoding("UTF-8"); 
-	String[] menuArr;
+	
 	Date d = null;
-	
-	if (request.getParameter("schoolDate") == null) {
-		d = new java.sql.Date(new java.util.Date().getTime());
-	} else {
-		d = Date.valueOf(request.getParameter("schoolDate"));
-	}
-	
-	System.out.println(d);
 	String mld = "";
+	MealDBBean dbBean = MealDBBean.getInstance();
+	List<MealTimeBean> list = dbBean.selectMealAll();
+	
+	int cnt = 0;
 %>
 
 	<div class="container">
@@ -161,7 +157,7 @@ System.out.println(intToday);
 							newLine++;
 						}
 						
-						for(int index = 1; index <= endDay; index++) {
+						for(int index = 1; index <= endDay; index++) {							
 						       String color = "";
 
 						       if(newLine == 0){color = "red";}
@@ -176,6 +172,14 @@ System.out.println(intToday);
 
 						       String iUseDate = sUseDate;
 						       
+						       for(MealTimeBean bean : list) {
+								   if(iUseDate.equals(bean.getSchoolDate().substring(0, 10))) {
+									   cnt++;
+								   }
+							   }
+						       
+						       System.out.println(iUseDate+" : "+cnt);
+						       
 						       if(iUseDate.equals(intToday)) {
 						    	   out.println("<td class='bg-dark text-white' nowrap>");
 						       } else {
@@ -184,9 +188,21 @@ System.out.println(intToday);
 						       %>
 						       
 						       <span style="color: <%= color %>;"><%= index %></span>
-								
+							   
 							   <%
-						       out.println("<br>" + iUseDate + "<br>");
+							   out.println("<br>");
+						       // out.println("<br>" + iUseDate + "<br>");
+							   
+							   if(cnt == 1) {
+								   out.println("조식");
+							   } else if (cnt == 2) {
+								   out.println("조식·중식");
+							   } else if (cnt == 3) {
+								   out.println("조식·중식·석식");
+							   } else {
+								   out.println("X");
+							   }
+							   
 						       out.println("</td>");
 						       newLine++;
 
@@ -197,6 +213,7 @@ System.out.println(intToday);
 						         }
 						         newLine=0;
 						       }
+						       cnt = 0;
 						}
 
 						//마지막 공란 while
