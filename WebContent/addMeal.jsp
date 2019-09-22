@@ -40,16 +40,17 @@
 </head>
 <body>
 
+
+<%@ include file="nav.jsp" %>
+
 <div class="jumbotron jumbotron-fluid">
  <div class="container">
    <h3 class="display-4">급식 메뉴 입력</h3>
  </div>
 </div>
-
+		
 <div class="container">
 	<div class="row">
-	
-		<%@ include file="nav.jsp" %>
 		
 		<div class="col-md-8 col-md-offset-2">
 			<form action="addMealProc.jsp" method="post" name="addMeal">

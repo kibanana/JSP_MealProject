@@ -1,18 +1,32 @@
+<%@page import="java.util.List"%>
+<%@page import="project.meal.MealDBBean"%>
+<%@page import="java.sql.Date"%>
+<%@page import="project.meal.MealDataBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+<title>School Meal : select menu proc</title>
 <script>
 window.onload = function() {
-	document.getElementById('now_date').valueAsDate = new Date();
+	let date = new Date();
+	
+	let day = date.getDate();
+	let month = date.getMonth() + 1;
+	let year = date.getFullYear();
+
+	if (month < 10) month = "0" + month;
+	if (day < 10) day = "0" + day;
+
+	let today = year + "-" + month + "-" + day;  
+	document.getElementById('now_date').value = today;
 }
 
 function submit (){
@@ -20,25 +34,20 @@ function submit (){
 	frm.submit();
 }
 </script>
-<title>School Meal : select menu</title>
 </head>
 <body>
 
-<div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h3 class="display-4">급식 메뉴 보기</h3>
-  </div>
-</div>
+<%@ include file="nav.jsp" %>
 
-<div class="container-fluid text-white-70 bg-dark">
-	<div class="row">
+<div class="container-fluid">
+	<div class="row text-white-70 bg-primary">
 		<div class="col-md-12 d-flex justify-content-center">
 		
-			<form action="selectMealProc.jsp" method="post" name="selectMeal">
+			<form action="selectMeal.jsp" method="post" name="selectMeal">
 				<div class="form-group">
 					<label>
 						<input type="date" id="now_date" name="schoolDate" onchange="submit()" class="form-control" style="margin-top: 25px; background: none; color: white; border: solid white 2px;">
-						<input type="submit" class="btn btn-outline-success">
+						<input type="submit" class="btn btn-block" value="검색" style="margin-top: 10px; background: none; color: white; border: solid white 2px;">
 					</label>
 				</div>
 			</form>
@@ -46,5 +55,70 @@ function submit (){
 		</div>
 	</div>
 </div>
+
+<%
+	request.setCharacterEncoding("UTF-8"); 
+	String[] menuArr;
+	Date d = null;
+	
+	if (request.getParameter("schoolDate") == null) {
+		d = new java.sql.Date(new java.util.Date().getTime());
+	} else {
+		d = Date.valueOf(request.getParameter("schoolDate"));
+	}
+	
+	System.out.println(d);
+	String mld = "";
+%>
+
+<div class="container">
+	<div class="row">
+	<div class="col-md-12" style="text-align: center;">
+		<h2><%= d %></h2>
+	</div>
+<%
+	MealDBBean dbBean = new MealDBBean();
+	List<MealDataBean> list = dbBean.selectMeal(d);
+	int cnt = 0;
+	
+	for(MealDataBean mealData : list) {
+		cnt++;
+		menuArr = mealData.getMenu().split("\\$");
+		%>
+		<div class="card" style="width: 33%; text-align: center;">
+		<% if(mealData.getSchoolTime().equals("M")){
+			mld = "조식";
+		} else if(mealData.getSchoolTime().equals("L")) {
+			mld = "중식";
+		} else {
+			mld = "석식";
+		}
+		%>
+	   	<div class="card-header bg-primary text-white">
+			<h3><%= mld %></h3>
+		</div>
+	    <div class="card-body"> 
+			<%
+			for(int i=0; i < menuArr.length; i++) { 
+				System.out.print(menuArr[i]);
+			%>
+				<%= menuArr[i] %><br>
+			<% } %>
+				
+			<br><br>
+			열량 : <%= mealData.getCal() %> kcal<br>
+			단백질 : <%= mealData.getPro() %> g<br>
+			칼슘 : <%= mealData.getCa() %> mg<br>
+			철분 : <%= mealData.getFe() %> mg<br>
+			<br>
+		 </div>
+	  </div>
+		
+	<% }//for %>
+	
+	<% if(cnt == 0) out.print("선택하신 날의 급식정보가 없습니다"); %>
+	</div>
+</div>
+
 </body>
 </html>

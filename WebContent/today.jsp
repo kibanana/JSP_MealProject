@@ -181,30 +181,26 @@ new StickyNavigation();
 	dbBean.insertMeal(meal);
 %>
 
- <section class="et-hero-tabs">
-    <h1>STICKY SLIDER NAV</h1>
-    <h3>Sliding content with sticky tab nav</h3>
-    <div class="et-hero-tabs-container" style="position: fixed; top: 0;">
-      <a class="et-hero-tab" href="#tab-es6">ES6</a>
-      <a class="et-hero-tab" href="#tab-flexbox">Flexbox</a>
-      <a class="et-hero-tab" href="#tab-other">Other</a>
-      <span class="et-hero-tab-slider"></span>
-    </div>
-  </section>
+<div class="et-hero-tabs-container" style="position: fixed; top: 0;">
+  <a class="et-hero-tab" href="#tab-y">Yesterday</a>
+  <a class="et-hero-tab" href="#tab-today">Today</a>
+  <a class="et-hero-tab" href="#tab-t">Tomorrow</a>
+  <span class="et-hero-tab-slider"></span>
+</div>
 
   <!-- Main -->
   <main class="et-main">
-    <section class="et-slide" id="tab-es6">
-      <h1>ES6</h1>
-      <h3>something about es6</h3>
+    <section class="et-slide" id="tab-y">
+      <h1>Yesterday</h1>
+      <h3>Yesterday</h3>
     </section>
-    <section class="et-slide" id="tab-flexbox">
-      <h1>Flexbox</h1>
-      <h3>something about flexbox</h3>
+    <section class="et-slide" id="tab-today">
+      <h1>Today</h1>
+      <h3>Today</h3>
     </section>
-    <section class="et-slide" id="tab-other">
-      <h1>Other</h1>
-      <h3>something about other</h3>
+    <section class="et-slide" id="tab-t">
+      <h1>Tomorrow</h1>
+      <h3>Tomorrow</h3>
     </section>
   </main>
 </body>
