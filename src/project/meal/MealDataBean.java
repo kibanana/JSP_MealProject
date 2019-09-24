@@ -9,6 +9,7 @@ public class MealDataBean {
 	private double pro;
 	private double ca;
 	private double fe;
+	private int reco;
 	
 	public int getIdx() {
 		return idx;
@@ -58,10 +59,16 @@ public class MealDataBean {
 	public void setFe(double fe) {
 		this.fe = fe;
 	}
+	public int getReco() {
+		return reco;
+	}
+	public void setReco(int reco) {
+		this.reco = reco;
+	}
 	
 	@Override
 	public String toString() {
 		return "MealDataBean [idx=" + idx + ", schoolDate=" + schoolDate + ", schoolTime=" + schoolTime + ", Menu="
-				+ Menu + ", cal=" + cal + ", pro=" + pro + ", ca=" + ca + ", fe=" + fe + "]";
+				+ Menu + ", cal=" + cal + ", pro=" + pro + ", ca=" + ca + ", fe=" + fe + ", reco=" + reco + "]";
 	}
 }

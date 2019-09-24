@@ -58,10 +58,16 @@ $('ul li').on('click', function() {
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
 	  <ul class="navbar-nav">
 	    <li class="nav-item active">
+	      <a href="selectMealAnd.jsp" class="nav-link text-primary"><i class="fas fa-mouse-pointer" style="margin-right: 10px"></i> SELECT</a>
+	    </li>
+	    <li class="nav-item">
 	      <a href="selectMeal.jsp" class="nav-link text-primary"><i class="fas fa-mouse-pointer" style="margin-right: 10px"></i> TODAY</a>
 	    </li>
 	    <li class="nav-item">
 	      <a href="calendar.jsp" class="nav-link text-primary"><i class="fa fa-calendar" style="margin-right: 10px"></i> Calendar</a>
+	    </li>
+	     <li class="nav-item">
+	      <a href="graph.jsp" class="nav-link text-primary"><i class="fa fa-signal" style="margin-right: 10px"></i> Graph</a>
 	    </li>
 	    <li class="nav-item">
 	      <a href="addMeal.jsp" class="nav-link text-primary"><i class="fa fa-plus" style="margin-right: 10px"></i> Add Meal</a>
